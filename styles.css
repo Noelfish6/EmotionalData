@@ -1,0 +1,46 @@
+body {
+      background-color: #F4F4F4;
+    }
+
+#canvas{
+    width:800;
+    min-height:670px;
+    height:600;
+    position: relative;
+
+    /*background-color: #F4F4F4;*/
+}
+
+#thing, #whom, #weatherDes {
+    text-decoration: underline;
+}
+
+.des {
+	position: relative;
+	top:120px;
+	left:900px;
+	border-top: 2px solid #665544;
+	border-bottom: 2px solid #665544;
+	margin:0px 0px 10px 10px;
+	font-style: italic;
+	padding: 20px;
+	width: 275px;
+	font-size: 110%;
+	border-top-color:#273952;
+	border-bottom-color:#273952;
+}
+
+.container {
+	position:absolute;
+	top:90px;
+	left:10px;
+
+}
+
+h1{
+	position:absolute;
+	top:20px;
+	left:70px;
+	color:#273952;
+}
+
