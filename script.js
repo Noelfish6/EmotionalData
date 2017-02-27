@@ -12,6 +12,7 @@ var scaleColor = d3.scaleOrdinal()
 const emotionct=document.querySelector('#emotion');
 const thingct=document.querySelector('#thing');
 const whomct=document.querySelector('#whom');
+const whom2ct=document.querySelector('#whom2');
 const weatherct=document.querySelector('#weatherDes');
 
 d3.csv('emotion.csv',parse,dataLoaded);
@@ -51,19 +52,7 @@ function dataLoaded(err,rows){
 
   d3.timer(function (){
 
-
-//............................................................................................................//
-
-    
-   
-
-
-//............................................................................................................//
-   
-
-
-
-    var circles = plot.selectAll("g").data(function(d){ return d.values;});
+    var circles = plot.selectAll("g").data(function(d){ return d.values;}); // d.values = a bunch of data
   
     circles = circles
       .enter()
@@ -71,12 +60,12 @@ function dataLoaded(err,rows){
       .merge(circles)
       .attr('transform', function(d, i){
         var x = (Math.sin(i * frequency + time)) * h/20 /*change this for width of wave*/ + h/30;
-        var y = i * w /n;
+        var y = i * w/n;
         return "translate("+x+","+y+")";
       })
       ;
 
-    circles = circles.selectAll("circle").data(function(d){ return [d]; });
+    circles = circles.selectAll("circle").data(function(d){ return [d]; }); //[d] = individual data
 
     circles
       .enter()
@@ -87,27 +76,107 @@ function dataLoaded(err,rows){
           emotionct.style.color=emotionkey.find(el=>el.id==d.emotion).color;
           thingct.innerHTML=jobkey.find(el=>el.id==d.job).job;
           whomct.innerHTML=people1key.find(el=>el.id==d.people1).people1;
+          whom2ct.innerHTML=people2key.find(el=>el.id==d.people2).people2;
           weatherct.innerHTML=weatherkey.find(el=>el.id==d.weather).weather;
           
       })
       .merge(circles)
       .attr("r", 7)
       .attr("fill", function(d){
-        if (d.weather == 0) {
+
+        if (d.weather == 1) {
           var parentG = d3.select(d3.select(this).node().parentNode)
           var weatherCircle = parentG.select(".weather");
           if (weatherCircle.node()) {
             weatherCircle.attr("r", 2)
-              .attr("cx", -10);
+              .attr("cx", -10)
+              .style('fill','grey');
           } else {
             parentG.append("circle")
               .attr("class", "weather")
-              .attr("r", 2)
-              .attr("cx", 10);
-          }
+              // .attr("r", 2)
+              // .attr("cx", 10)
+              ;
+            }
+        }
+      })
+      .attr("fill", function(d){
+        if (d.people1 == 2) {
+          var parentG = d3.select(d3.select(this).node().parentNode)
+          var people1Circle = parentG.select('.people1');
+          if(people1Circle.node()) {
+            people1Circle.attr("r",2)
+              .attr('cx',10)
+              .style('fill','grey');
+          } else {
+            parentG.append('circle')
+              .attr('class', "people1")
+              // .attr('r',2)
+              // .attr('cx',10)
+              ;
+            }
+        }
+      })
+      .attr("fill", function(d){
+        if (d.people1 == 3) {
+          var parentG = d3.select(d3.select(this).node().parentNode)
+          var people2Circle = parentG.select('.people2');
+          if(people2Circle.node()) {
+            people2Circle
+              .attr("width",3)
+              .attr('height',3)
+              .attr('x',10)
+              .style('fill','grey');
+          } else {
+            parentG.append('rect')
+              .attr('class', "people2")
+              // .attr('height',4)
+              // .attr('width',4)
+              // .attr('cx',20)
+              ;
+            } 
         }
         return scaleColor(d.emotion);
       })
+      .attr("fill", function(d){
+        if (d.people1 == 4) {
+          var parentG = d3.select(d3.select(this).node().parentNode)
+          var people3Circle = parentG.select('.people3');
+          if(people3Circle.node()) {
+            people3Circle
+              .attr('width',3)
+              .attr('height',3)
+              // .attr("rotate",'90')
+              .attr('x',10)
+              .style('fill','black')
+              ;
+          } else {
+            parentG.append('rect')
+              .attr('class', "people3")
+              ;
+            } 
+        }
+        // return scaleColor(d.emotion);
+      })
+      .attr("fill", function(d){
+        if (d.people2 == 3) {
+          var parentG = d3.select(d3.select(this).node().parentNode)
+          var people4Circle = parentG.select('.people4');
+          if(people4Circle.node()) {
+            people4Circle
+              .attr('width',3)
+              .attr('height',3)
+              .attr('x',14)
+              .style('fill','grey')
+              ;
+          } else {
+            parentG.append('rect')
+              .attr('class', "people4")
+              ;
+            } 
+        }
+        return scaleColor(d.emotion);
+      })      
       ;
 
         time += 0.005;
@@ -170,6 +239,14 @@ function parse(d){
         {id:3,people1:'friend(s)',color:'#0c0c04'},
         {id:4,people1:'coworker/clients',color:'#0c0c04'},
     ]
+
+    const people2key=[
+        {id:0,people2:'',color:'#0c0c04'},
+        {id:1,people2:'myself',color:'#0c0c04'},
+        {id:2,people2:'my boyfriend',color:'#0c0c04'},
+        {id:3,people2:'and friend(s)',color:'#0c0c04'},
+        {id:4,people2:'and coworker/clients',color:'#0c0c04'},
+    ]    
 
     const weatherkey=[
         {id:0,weather:'good'},
