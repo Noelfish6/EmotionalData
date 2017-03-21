@@ -6,7 +6,7 @@ var w = document.getElementById('canvas').clientWidth - margin.l - margin.r,
 
 
 var scaleColor = d3.scaleOrdinal()
-      .range(["#fdf63c", "#fda135", "#f9201f", "#c51124", "#fc715d", "#9673b9", "#7753d4", "#f769e2", "#5e7c7f", "#2ebec2", "#1979dc", "#a4e435"])
+      .range(["#F6EB9A", "#fda135", "#f9201f", "#c51124", "#fc715d", "#9673b9", "#7753d4", "#f769e2", "#5e7c7f", "#2ebec2", "#1979dc", "#a4e435"])
       .domain(["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]);
 
 const emotionct=document.querySelector('#emotion');
@@ -15,8 +15,23 @@ const whomct=document.querySelector('#whom');
 const whom2ct=document.querySelector('#whom2');
 const weatherct=document.querySelector('#weatherDes');
 
-d3.csv('emotion.csv',parse,dataLoaded);
 
+
+//animation for headline
+  var texto = document.querySelector('.transition').innerHTML;
+  document.querySelector('.transition').innerHTML = "";
+  texto.split('').forEach(function(e){
+    e = e == " " ? "&nbsp;" : e;
+    var span = document.createElement('span');
+    span.innerHTML = e;
+    document.querySelector('.transition').appendChild(span);
+  });
+
+
+
+
+//circles
+d3.csv('emotion.csv',parse,dataLoaded);
 
 function dataLoaded(err,rows){
     
@@ -28,8 +43,6 @@ function dataLoaded(err,rows){
       .key(function(d){return d.job}) 
       .key(function(d){return d.weather})
       .entries(rows);
-    
-
 
   var plot = d3.select('#canvas')
                .append('svg')
@@ -39,16 +52,16 @@ function dataLoaded(err,rows){
                .data(job)
                .enter()
                .append('g')
-               .attr('transform', function(_, i) {
-                return 'translate('+(margin.l+i*50)+','+margin.t+')'
+               .attr('transform', function(d, i) {
+                  return 'translate('+((margin.l)+ 100)+','+(margin.t+i*43+20)+')';
               });
-
 
   var n = 50,
       frequency = 1/4,
       data = d3.range(n),
       time = 0;
 
+console.log(text);
 
   d3.timer(function (){
 
@@ -59,18 +72,21 @@ function dataLoaded(err,rows){
       .append("g")
       .merge(circles)
       .attr('transform', function(d, i){
-        var x = (Math.sin(i * frequency + time)) * h/20 /*change this for width of wave*/ + h/30;
-        var y = i * w/n;
+        var x = i*w/50;
+        var y = (Math.sin(i * frequency + time)) * h/25;
+
         return "translate("+x+","+y+")";
-      })
-      ;
+      });      
 
-    circles = circles.selectAll("circle").data(function(d){ return [d]; }); //[d] = individual data
+    circles = circles.selectAll("circle").data(function(d){ return [d]; }); // [d] = individual data
 
+    
+
+    
     circles
       .enter()
       .append("circle")
-      .on('click',function(d){
+      .on('mouseenter',function(d){
           
           emotionct.innerHTML=emotionkey.find(el=>el.id==d.emotion).emotion;
           emotionct.style.color=emotionkey.find(el=>el.id==d.emotion).color;
@@ -79,6 +95,11 @@ function dataLoaded(err,rows){
           whom2ct.innerHTML=people2key.find(el=>el.id==d.people2).people2;
           weatherct.innerHTML=weatherkey.find(el=>el.id==d.weather).weather;
           
+          d3.select(this).style("stroke", "black").style('stroke-width', '2px');
+      })
+      .on('mouseleave', function(d){
+          d3.select(this).style("stroke","black").style('stroke-width', '0px');
+
       })
       .merge(circles)
       .attr("r", 7)
@@ -88,15 +109,12 @@ function dataLoaded(err,rows){
           var parentG = d3.select(d3.select(this).node().parentNode)
           var weatherCircle = parentG.select(".weather");
           if (weatherCircle.node()) {
-            weatherCircle.attr("r", 2)
-              .attr("cx", -10)
-              .style('fill','grey');
           } else {
             parentG.append("circle")
               .attr("class", "weather")
-              // .attr("r", 2)
-              // .attr("cx", 10)
-              ;
+              .attr("r", 2)
+              .attr("cy", -10)
+              .attr('fill', 'grey');
             }
         }
       })
@@ -105,14 +123,13 @@ function dataLoaded(err,rows){
           var parentG = d3.select(d3.select(this).node().parentNode)
           var people1Circle = parentG.select('.people1');
           if(people1Circle.node()) {
-            people1Circle.attr("r",2)
-              .attr('cx',10)
+            people1Circle
+              .attr("r",2)
+              .attr('cy',10)
               .style('fill','grey');
           } else {
             parentG.append('circle')
               .attr('class', "people1")
-              // .attr('r',2)
-              // .attr('cx',10)
               ;
             }
         }
@@ -125,7 +142,7 @@ function dataLoaded(err,rows){
             people2Circle
               .attr("width",3)
               .attr('height',3)
-              .attr('x',10)
+              .attr('y',10)
               .style('fill','grey');
           } else {
             parentG.append('rect')
@@ -147,7 +164,7 @@ function dataLoaded(err,rows){
               .attr('width',3)
               .attr('height',3)
               // .attr("rotate",'90')
-              .attr('x',10)
+              .attr('y',10)
               .style('fill','black')
               ;
           } else {
@@ -160,13 +177,13 @@ function dataLoaded(err,rows){
       })
       .attr("fill", function(d){
         if (d.people2 == 3) {
-          var parentG = d3.select(d3.select(this).node().parentNode)
+          var parentG = d3.select(d3.select(this).node().parentNode);
           var people4Circle = parentG.select('.people4');
           if(people4Circle.node()) {
             people4Circle
               .attr('width',3)
               .attr('height',3)
-              .attr('x',14)
+              .attr('y',14)
               .style('fill','grey')
               ;
           } else {
@@ -175,14 +192,28 @@ function dataLoaded(err,rows){
               ;
             } 
         }
+      })
+      .attr("fill", function(d){
+        if (d.people2 == 4) {
+          var parentG = d3.select(d3.select(this).node().parentNode);
+          var people5Circle = parentG.select('.people5');
+          if(people5Circle.node()) {
+            people5Circle
+              .attr('width',3)
+              .attr('height',3)
+              .attr('y',14)
+              .style('fill','black')
+              ;
+          } else {
+            parentG.append('rect')
+              .attr('class', "people5")
+              ;
+            } 
+        }
         return scaleColor(d.emotion);
-      })      
-      ;
-
-        time += 0.005;
+      });
+        time += 0.023;
     });
-
-console.log([weather]);
 
 }
 
@@ -197,12 +228,13 @@ function parse(d){
           people1: +d.people1,
           people2: +d.people2,
           people3: +d.people3,
-        }
-};
+          text: d.text,
+        };
+}
 
 
     const emotionkey=[
-        {id:1,emotion:'unproductive',color:'#fdf63c'},
+        {id:1,emotion:'unproductive',color:'#F6EB9A'},
         {id:2,emotion:'stressed',color:'#fda135'},
         {id:3,emotion:'anxious',color:'#f9201f'},
         {id:4,emotion:'confused',color:'#c51124'},
@@ -214,7 +246,7 @@ function parse(d){
         {id:10,emotion:'productive',color:'#2ebec2'},
         {id:11,emotion:'excited',color:'#1979dc'},
         {id:12,emotion:'nostalgic',color:'#a4e435'},
-    ]
+    ];
 
     const jobkey=[
         {id:1,job:'writing email',color:'#0c0c04'},
@@ -231,14 +263,14 @@ function parse(d){
         {id:12,job:'attending events'},
         {id:13,job:'lying on a couch'},
         {id:14,job:'planning'},
-    ]
+    ];
 
     const people1key=[
         {id:1,people1:'myself',color:'#0c0c04'},
         {id:2,people1:'my boyfriend',color:'#0c0c04'},
         {id:3,people1:'friend(s)',color:'#0c0c04'},
         {id:4,people1:'coworker/clients',color:'#0c0c04'},
-    ]
+    ];
 
     const people2key=[
         {id:0,people2:'',color:'#0c0c04'},
@@ -246,10 +278,39 @@ function parse(d){
         {id:2,people2:'my boyfriend',color:'#0c0c04'},
         {id:3,people2:'and friend(s)',color:'#0c0c04'},
         {id:4,people2:'and coworker/clients',color:'#0c0c04'},
-    ]    
+    ];   
+
+    const people3key=[
+        {id:0,people3:'',color:'#0c0c04'},
+        {id:1,people3:'myself',color:'#0c0c04'},
+        {id:2,people3:'my boyfriend',color:'#0c0c04'},
+        {id:3,people3:'and friend(s)',color:'#0c0c04'},
+        {id:4,people3:'and coworker/clients',color:'#0c0c04'},
+    ];    
 
     const weatherkey=[
         {id:0,weather:'good'},
         {id:1,weather:'bad'},
 
-    ]
+    ];
+
+    const text=[
+        {id:0, text:'a'},
+        {id:1, text:'b'},
+        {id:2, text:'c'},
+        {id:3, text:'d'},
+        {id:4, text:'e'},
+        {id:5, text:'f'},
+        {id:6, text:'g'},
+        {id:7, text:'h'},
+        {id:8, text:'i'},
+        {id:9, text:'j'},
+        {id:10, text:'k'},
+        {id:11, text:'l'},
+        {id:12, text:'m'},
+        {id:13, text:'n'},
+    ];
+
+
+
+
