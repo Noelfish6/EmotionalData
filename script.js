@@ -99,12 +99,13 @@ var x, y,
     // console.log(texts);
     // console.log(texts.data());
     texts.exit().remove();
+
     texts
       .enter()
       .append("text")
       .merge(texts)
       // .classed("letter", true)
-      .attr("x", function(d,i){ return -10*(i+1); })
+      .attr("x", function(d,i){ return -10*(i+1.5); })
       .attr("y", function(_, i) { return calculateYPosition(-i); })
       .attr("text-anchor", "end")
       .style("fill", "#273952")
