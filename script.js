@@ -9,11 +9,11 @@ var scaleColor = d3.scaleOrdinal()
       .range(["#F6EB9A", "#fda135", "#f9201f", "#c51124", "#fc715d", "#9673b9", "#7753d4", "#f769e2", "#5e7c7f", "#2ebec2", "#1979dc", "#a4e435"])
       .domain(["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]);
 
-const emotionct=document.querySelector('#emotion');
-const thingct=document.querySelector('#thing');
-const whomct=document.querySelector('#whom');
-const whom2ct=document.querySelector('#whom2');
-const weatherct=document.querySelector('#weatherDes');
+var emotionct=document.querySelector('#emotion');
+var thingct=document.querySelector('#thing');
+var whomct=document.querySelector('#whom');
+var whom2ct=document.querySelector('#whom2');
+var weatherct=document.querySelector('#weatherDes');
 
 
 
@@ -61,27 +61,60 @@ function dataLoaded(err,rows){
       data = d3.range(n),
       time = 0;
 
-console.log(text);
+var x, y,
+    word = "apple",
+    width = plot.attr("width"),
+    height = plot.attr("height");
+
+
 
   d3.timer(function (){
 
+    //circles
     var circles = plot.selectAll("g").data(function(d){ return d.values;}); // d.values = a bunch of data
-  
+    function calculateYPosition(i) {
+      return (Math.sin(i * frequency + time)) * h/25; 
+    }
     circles = circles
       .enter()
       .append("g")
       .merge(circles)
       .attr('transform', function(d, i){
-        var x = i*w/50;
-        var y = (Math.sin(i * frequency + time)) * h/25;
-
+        x = i*w/50;
+        y = calculateYPosition(i);
         return "translate("+x+","+y+")";
       });      
 
     circles = circles.selectAll("circle").data(function(d){ return [d]; }); // [d] = individual data
 
+    //text
+    var texts = plot.selectAll("text").data(function(d){
+      // Filter the letter with same job-id
+      var filteredLetter = letter.filter(function(e) { return (e.id == d.key); })[0];
+      // console.log(d, filteredLetter);
+      // debugger;
+      return filteredLetter.text; // get the related text to add to respective line
+    });
+    // console.log(texts);
+    // console.log(texts.data());
+    texts.exit().remove();
+    texts
+      .enter()
+      .append("text")
+      .merge(texts)
+      // .classed("letter", true)
+      .attr("x", function(d,i){ return -10*(i+1); })
+      .attr("y", function(_, i) { return calculateYPosition(-i); })
+      .attr("text-anchor", "end")
+      .style("fill", "#273952")
+      .text(function(d) { return d; });
     
-
+    // texts = texts
+    //   .attr('transform', function(d, i){
+    //     x = i*w/50;
+    //     y = (Math.sin(i * frequency + time)) * h/25;
+    //     return "translate("+x+","+y+")";
+    //   }); 
     
     circles
       .enter()
@@ -294,21 +327,21 @@ function parse(d){
 
     ];
 
-    const text=[
-        {id:0, text:'a'},
-        {id:1, text:'b'},
-        {id:2, text:'c'},
-        {id:3, text:'d'},
-        {id:4, text:'e'},
-        {id:5, text:'f'},
-        {id:6, text:'g'},
-        {id:7, text:'h'},
-        {id:8, text:'i'},
-        {id:9, text:'j'},
-        {id:10, text:'k'},
-        {id:11, text:'l'},
-        {id:12, text:'m'},
-        {id:13, text:'n'},
+    const letter=[
+        {id:1, text:'liam e'},
+        {id:2, text:'stcejorp'},
+        {id:3, text:'gniklat'},
+        {id:4, text:'atad raed'},
+        {id:5, text:'sgniteem'},
+        {id:6, text:'gnitiaw'},
+        {id:7, text:'!gniklaw'},
+        {id:8, text:'perp '},
+        {id:9, text:'slaem'},
+        {id:10, text:'!gnippohs'},
+        {id:11, text:'!!aps'},
+        {id:12, text:'stneve'},
+        {id:13, text:'gniyl'},
+        {id:14, text:'gninnalp'},
     ];
 
 
