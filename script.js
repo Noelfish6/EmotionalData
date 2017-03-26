@@ -72,8 +72,9 @@ var x, y,
 
     //circles
     var circles = plot.selectAll("g").data(function(d){ return d.values;}); // d.values = a bunch of data
+    
     function calculateYPosition(i) {
-      return (Math.sin(i * frequency + time)) * h/25; 
+      return (Math.sin(i * frequency + time)) * h/26; 
     }
     circles = circles
       .enter()
@@ -90,7 +91,7 @@ var x, y,
     //text
     var texts = plot.selectAll("text").data(function(d){
       // Filter the letter with same job-id
-      var filteredLetter = letter.filter(function(e) { return (e.id == d.key); })[0];
+    var filteredLetter = letter.filter(function(e) { return (e.id == d.key); })[0];
       // console.log(d, filteredLetter);
       // debugger;
       return filteredLetter.text; // get the related text to add to respective line
@@ -245,7 +246,7 @@ var x, y,
         }
         return scaleColor(d.emotion);
       });
-        time += 0.023;
+        time += 0.018;
     });
 
 }
