@@ -37,10 +37,22 @@ body {
 
 }
 
-h1, div.text{
+h1{
 	position:absolute;
-	top:20px;
+	top:6px;
 	left:70px;
 	color:#273952;
 }
 
+h4{
+	position: absolute;
+	top:55px;
+	left:70px;
+	color:#273952;
+	font-family: Futura;
+	font-weight: lighter;
+}
+
+element.style{
+	font-family: Futura;
+}

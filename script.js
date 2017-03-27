@@ -18,16 +18,23 @@ var weatherct=document.querySelector('#weatherDes');
 
 
 //animation for headline
-  var texto = document.querySelector('.transition').innerHTML;
-  document.querySelector('.transition').innerHTML = "";
-  texto.split('').forEach(function(e){
-    e = e == " " ? "&nbsp;" : e;
-    var span = document.createElement('span');
-    span.innerHTML = e;
-    document.querySelector('.transition').appendChild(span);
-  });
+  // var texto = document.querySelector('.transition').innerHTML;
+  // document.querySelector('.transition').innerHTML = "";
+  // texto.split('').forEach(function(e){
+  //   e = e == " " ? "&nbsp;" : e;
+  //   var span = document.createElement('span');
+  //   span.innerHTML = e;
+  //   document.querySelector('.transition').appendChild(span);
+  // });
 
-
+  //   var subtitle = document.querySelector('.animation').innerHTML;
+  // document.querySelector('.animation').innerHTML = "";
+  // subtitle.split('').forEach(function(e){
+  //   e = e == " " ? "&nbsp;" : e;
+  //   var span = document.createElement('span');
+  //   span.innerHTML = e;
+  //   document.querySelector('.animation').appendChild(span);
+  // });
 
 
 //circles
@@ -108,7 +115,9 @@ var x, y,
       .attr("x", function(d,i){ return -10*(i+1.5); })
       .attr("y", function(_, i) { return calculateYPosition(-i); })
       .attr("text-anchor", "end")
-      .style("fill", "#273952")
+      .style("fill", "#9ba6b1")
+      .style("font-family", "Futura")
+      .style("font-weight", 100)
       .text(function(d) { return d; });
     
     // texts = texts
