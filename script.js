@@ -18,14 +18,14 @@ var weatherct=document.querySelector('#weatherDes');
 
 
 //animation for headline
-  // var texto = document.querySelector('.transition').innerHTML;
-  // document.querySelector('.transition').innerHTML = "";
-  // texto.split('').forEach(function(e){
-  //   e = e == " " ? "&nbsp;" : e;
-  //   var span = document.createElement('span');
-  //   span.innerHTML = e;
-  //   document.querySelector('.transition').appendChild(span);
-  // });
+  var texto = document.querySelector('.transition').innerHTML;
+  document.querySelector('.transition').innerHTML = "";
+  texto.split('').forEach(function(e){
+    e = e == " " ? "&nbsp;" : e;
+    var span = document.createElement('span');
+    span.innerHTML = e;
+    document.querySelector('.transition').appendChild(span);
+  });
 
   //   var subtitle = document.querySelector('.animation').innerHTML;
   // document.querySelector('.animation').innerHTML = "";
@@ -68,10 +68,10 @@ function dataLoaded(err,rows){
       data = d3.range(n),
       time = 0;
 
-var x, y,
-    word = "apple",
-    width = plot.attr("width"),
-    height = plot.attr("height");
+  var x, y,
+      word = "apple",
+      width = plot.attr("width"),
+      height = plot.attr("height");
 
 
 
@@ -83,6 +83,7 @@ var x, y,
     function calculateYPosition(i) {
       return (Math.sin(i * frequency + time)) * h/26; 
     }
+
     circles = circles
       .enter()
       .append("g")
@@ -115,9 +116,8 @@ var x, y,
       .attr("x", function(d,i){ return -10*(i+1.5); })
       .attr("y", function(_, i) { return calculateYPosition(-i); })
       .attr("text-anchor", "end")
-      .style("fill", "#9ba6b1")
-      .style("font-family", "Futura")
-      .style("font-weight", 100)
+      .attr("fill", "#273952")
+      // .style("font-family", "futura-pt")
       .text(function(d) { return d; });
     
     // texts = texts
@@ -146,7 +146,7 @@ var x, y,
 
       })
       .merge(circles)
-      .attr("r", 7)
+      .attr("r", 6)
       .attr("fill", function(d){
 
         if (d.weather == 1) {

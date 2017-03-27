@@ -16,40 +16,45 @@ body {
 }
 
 .des {
-	position: relative;
-	top:120px;
-	left:900px;
+	position: absolute;
+	top:380px;
+	left:90px;
 	border-top: 2px solid #665544;
 	border-bottom: 2px solid #665544;
 	margin:0px 0px 10px 10px;
 	font-style: italic;
-	padding: 20px;
-	width: 275px;
-	font-size: 110%;
+	padding: 5px;
+	width: 350px;
+	font-size: 100%;
 	border-top-color:#273952;
 	border-bottom-color:#273952;
+	color:#273952;
 }
 
 .container {
 	position:absolute;
-	top:90px;
-	left:10px;
+	top:30px;
+	left:560px;
 
 }
 
 h1{
+	font-size: 50px;
 	position:absolute;
-	top:6px;
-	left:70px;
+	top:160px;
+	left:100px;
 	color:#273952;
+	font-family: "futura-pt";
+	font-weight: 305;
 }
 
 h4{
 	position: absolute;
-	top:55px;
-	left:70px;
+	font-size: 15px;
+	top:260px;
+	left:100px;
 	color:#273952;
-	font-family: Futura;
+	font-family: "futura-pt";
 	font-weight: lighter;
 }
 
