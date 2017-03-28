@@ -15,6 +15,13 @@ body {
     text-decoration: underline;
 }
 
+#Lupi {
+	font-style: italic;
+	font-size: 90%;
+	line-height: 300%;
+	font-family: "Comic Sans MS";
+}
+
 .des {
 	position: absolute;
 	top:380px;
