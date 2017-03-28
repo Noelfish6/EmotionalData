@@ -12,7 +12,6 @@ body {
 }
 
 #thing, #whom, #whom2, #weatherDes {
-    text-decoration: underline;
 	font-weight: bold;
 }
 
