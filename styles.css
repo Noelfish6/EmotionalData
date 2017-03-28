@@ -13,6 +13,7 @@ body {
 
 #thing, #whom, #whom2, #weatherDes {
     text-decoration: underline;
+	font-weight: bold;
 }
 
 #Lupi {
@@ -29,7 +30,7 @@ body {
 	border-top: 1px solid #665544;
 	border-bottom: 1px solid #665544;
 	margin:0px 0px 10px 10px;
-	font-weight: bold;
+	font-style: italic;
 	padding: 5px;
 	width: 350px;
 	font-size: 100%;
